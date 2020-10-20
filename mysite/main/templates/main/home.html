@@ -1,17 +1,19 @@
 {% extends 'header.html' %}
 {% block content %}
-<form class="col s12" method="post">
-    <div class="input-field col s12">
-        <select>
-            <option value="" disabled selected>Choose Breed</option>
-            {% for breed in breeds %}
-            <option value={{breed}}>{{breed}}</option>
-            {% endfor %}
-        </select>
-        <label>Breed</label>
-    </div>
-    <button class="btn waves-effect waves-light" type="submit">Search</button>
-</form>
+<div class="row">
+    <form class="col s12" method="get">
+        {% csrf_token %}
+        {{ breed_selection_form.as_p }}
+        <button class="btn waves-effect waves-light" type="submit">Search</button>
+    </form>
+</div>
+{% if search_result %}
+{% for result in search_result.message %}
+<img src="{{result}}" class="col s12" width="500" height="600">
+{% endfor %}
+{% endif %}
+
+
 <script>
 $(document).ready(function(){
     $('select').formSelect();
